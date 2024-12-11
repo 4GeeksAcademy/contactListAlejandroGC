@@ -1,15 +1,25 @@
-import React from "react";
-import rigoImage from "../../img/rigo-baby.jpg";
+import React, { useEffect, useState, useContext } from "react";
 import "../../styles/home.css";
+import { Link } from "react-router-dom";
+import CardContact from "../component/cardContact";
+import { Context } from "../store/appContext";
 
-export const Home = () => (
-	<div className="text-center mt-5">
-		<h1>Hello Rigo!</h1>
-		<p>
-			<img src={rigoImage} />
-		</p>
-		<a href="#" className="btn btn-success">
-			If you see this green button, bootstrap is working
-		</a>
-	</div>
-);
+export const Home = () => {
+	const {store, actions} = useContext(Context);
+	
+	useEffect(() => {actions.getAllContacts()},[])
+
+	return (
+		<>
+			<div className="container d-flex justify-content-end my-3 p-0 col-11">
+				<Link to="/add-contact">
+					<button className="btn btn-success">Add new contact</button>
+				</Link>
+			</div>
+			{
+				store.userContacts.length === 0 ? <h1 className="text-center mt-4">No contacts added</h1>
+				: <CardContact datos={store.userContacts}/>
+			}
+		</>
+	)
+};

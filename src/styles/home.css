@@ -1,0 +1,17 @@
+.data > div, .ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.color-grey{
+    color: grey;
+}
+@media (max-width: 426px) {
+    *{
+        font-size: 9px;
+    }
+}
+@media (min-width: 427px) and (max-width: 1024px) {
+    *{
+        font-size: 12px;
+    }
+  }
