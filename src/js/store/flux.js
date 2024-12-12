@@ -9,6 +9,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			ID: null
 		},
 		actions: {
+			setAllContactData: (e) => {
+				setStore({ID: e.target.id});
+				let index = getStore().userContacts.findIndex((item)=>item.id == e.target.id);
+				setStore({contactName: getStore().userContacts[index].name});
+				setStore({email: getStore().userContacts[index].email});
+				setStore({phone: getStore().userContacts[index].phone});
+				setStore({address: getStore().userContacts[index].address});
+			},
 			setUserContacts: (userContacts) => {
 				setStore({userContacts: userContacts});
 			},
@@ -24,8 +32,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setAddress: (address) => {
 				setStore({address: address});
 			},
-			setID: (e) => {
-				setStore({ID: e.target.id});
+			resetAllData: () => {
+				setStore({contactName: "",
+					email: "",
+					phone: "",
+					address: "",
+					ID: null});
 			},
 			createContact: async () => {
 				try {
@@ -33,8 +45,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method:"POST",
 						body: JSON.stringify({
 							"name": getStore().contactName,
-							"phone": getStore().email,
-							"email": getStore().phone,
+							"phone": getStore().phone,
+							"email": getStore().email,
 							"address": getStore().address
 						  }),
 						  headers: {
@@ -43,6 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if (response.ok) {
 						console.log("Contact added");
+						getActions().resetAllData();
 						return true;
 					} else {
 						console.log("Contact can't be created");
@@ -96,13 +109,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return;
 				}
 			},
-			deleteContact: async (e) => {
+			deleteContact: async () => {
 				try {
-					await fetch("https://playground.4geeks.com/contact/agendas/AlejandroGC/contacts/" + e.target.id,{
+					await fetch("https://playground.4geeks.com/contact/agendas/AlejandroGC/contacts/" + getStore().ID,{
 						method:"DELETE"
 					});
 					console.log("User deleted");
 					getActions().getUserContacts();
+					getActions().resetAllData();
 					return true;
 				} catch (error) {
 					console.log(error);
@@ -111,22 +125,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			updateContact: async () => {
 				try {
-					let response = await fetch("https://playground.4geeks.com/contact/agendas/AlejandroGC/contacts/" + getStore().ID,{
+					await fetch("https://playground.4geeks.com/contact/agendas/AlejandroGC/contacts/" + getStore().ID,{
 						method:"PUT",
 						body: JSON.stringify({
 							"name": getStore().contactName,
-							"phone": getStore().email,
-							"email": getStore().phone,
+							"email": getStore().email,
+							"phone": getStore().phone,
 							"address": getStore().address
 						  }),
 						  headers: {
 							'Content-type': 'application/json'
 						  }
 					});
-					const data = response.json();
 					console.log("User updated");
 					getActions().getUserContacts();
-					setStore({ID: null});
+					getActions().resetAllData();
 					return true;
 				} catch (error) {
 					console.log(error);

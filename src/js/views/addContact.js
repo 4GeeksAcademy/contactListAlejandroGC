@@ -15,25 +15,25 @@ export const AddContact = () => {
 				<div className="d-flex flex-column align-items-center">
 					<div className="row mb-3 col-11 col-md-8">
 						<label htmlFor="inputName">Full Name</label>
-						<input type="text" className="form-control" id="inputName" placeholder="Full Name" onChange={e => actions.setContactName(e.target.value)}/>
+						<input type="text" className="form-control" id="inputName" placeholder="Full Name" value={store.contactName} onChange={e => actions.setContactName(e.target.value)}/>
 					</div>
 					<div className="row mb-3 col-11 col-md-8">
 						<label htmlFor="inputEmail">Email</label>
-						<input type="text" className="form-control" id="inputEmail" placeholder="Enter Email" onChange={e => actions.setEmail(e.target.value)}/>
+						<input type="email" className="form-control" id="inputEmail" placeholder="Enter email" value={store.email} onChange={e => actions.setEmail(e.target.value)}/>
 					</div>
 					<div className="row mb-3 col-11 col-md-8">
 						<label htmlFor="inputPhone">Phone</label>
-						<input type="text" className="form-control" id="inputPhone" placeholder="Enter phone" onChange={e => actions.setPhone(e.target.value)}/>
+						<input type="text" className="form-control" id="inputPhone" placeholder="Enter phone" value={store.phone} onChange={e => actions.setPhone(e.target.value)}/>
 					</div>
 					<div className="row mb-3 col-11 col-md-8">
 						<label htmlFor="inputAddress">Address</label>
-						<input type="text" className="form-control" id="inputAddress" placeholder="Enter address" onChange={e => actions.setAddress(e.target.value)}/>
+						<input type="text" className="form-control" id="inputAddress" placeholder="Enter address" value={store.address} onChange={e => actions.setAddress(e.target.value)}/>
 					</div>
 					<div className="col-11 col-md-8">
 						<Link to="/">
 							<button className="btn btn-primary w-100" onClick={store.ID !== null ? actions.updateContact : actions.createContact}>save</button>
 						</Link>
-						<Link to="/">
+						<Link to="/" onClick={actions.resetAllData}>
 							or get back to contacts
 						</Link>
 					</div>

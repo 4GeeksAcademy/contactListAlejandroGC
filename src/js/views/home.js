@@ -11,14 +11,16 @@ export const Home = () => {
 
 	return (
 		<>
-			<div className="container d-flex justify-content-end my-3 p-0 col-11">
+			<div className="container d-flex justify-content-end mb-3 p-0 col-11">
 				<Link to="/add-contact">
 					<button className="btn btn-success">Add new contact</button>
 				</Link>
 			</div>
 			{
 				store.userContacts.length === 0 ? <h1 className="text-center mt-4">No contacts added</h1>
-				: <CardContact datos={store.userContacts}/>
+				: <div className="container d-flex flex-column align-items-center pb-5">
+					<CardContact/>
+				</div>
 			}
 		</>
 	)
