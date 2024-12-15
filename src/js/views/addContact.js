@@ -14,8 +14,9 @@ export const AddContact = () => {
 		if (store.userContacts.length !== 0) {
 			let index = store.userContacts.findIndex((item)=>item.id == id);
 			return store.userContacts[index];
+		} else {
+			return "";
 		}
-		return "";
 	}
 
 	useEffect(()=>{
@@ -32,7 +33,7 @@ export const AddContact = () => {
 
 	return (
 		<div className="container mt-5">
-			<h1 className="mb-3 text-center">{data.state !== null ? "Update your contact" : "Add a new contact"}</h1>
+			<h1 className="mb-3 text-center">{data.state !== null && store.userContacts.length !== 0 ? "Update your contact" : "Add a new contact"}</h1>
 			<form>
 				<div className="d-flex flex-column align-items-center">
 					<div className="row mb-3 col-11 col-md-8">
@@ -52,7 +53,7 @@ export const AddContact = () => {
 						<input type="text" className="form-control" id="inputAddress" placeholder="Enter address" value={store.address} onChange={e => actions.setAddress(e.target.value)}/>
 					</div>
 					<div className="col-11 col-md-8">
-						<Link to="/" onClick={data.state !== null ? actions.updateContact : actions.createContact}>
+						<Link to="/" onClick={data.state !== null && store.userContacts.length !== 0 ? actions.updateContact : actions.createContact}>
 							<button className="btn btn-primary w-100">save</button>
 						</Link>
 						<Link to="/" onClick={actions.resetAllData}>
