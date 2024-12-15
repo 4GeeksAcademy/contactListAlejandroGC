@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
@@ -8,9 +8,31 @@ import "../../styles/demo.css";
 export const AddContact = () => {
 	const {store,actions} = useContext(Context);
 
+	const data = useLocation();
+
+	const loadData = (id) => {
+		if (store.userContacts.length !== 0) {
+			let index = store.userContacts.findIndex((item)=>item.id == id);
+			return store.userContacts[index];
+		}
+		return "";
+	}
+
+	useEffect(()=>{
+		if (data.state){
+			let info = loadData(data.state.id);
+			actions.setID(data.state.id);
+			actions.setContactName(info.name);
+			actions.setAddress(info.address);
+			actions.setEmail(info.email);
+			actions.setPhone(info.phone);
+		} 
+	},[])
+
+
 	return (
 		<div className="container mt-5">
-			<h1 className="mb-3 text-center">{store.ID !== null ? "Update your contact" : "Add a new contact"}</h1>
+			<h1 className="mb-3 text-center">{data.state !== null ? "Update your contact" : "Add a new contact"}</h1>
 			<form>
 				<div className="d-flex flex-column align-items-center">
 					<div className="row mb-3 col-11 col-md-8">
@@ -30,8 +52,8 @@ export const AddContact = () => {
 						<input type="text" className="form-control" id="inputAddress" placeholder="Enter address" value={store.address} onChange={e => actions.setAddress(e.target.value)}/>
 					</div>
 					<div className="col-11 col-md-8">
-						<Link to="/">
-							<button className="btn btn-primary w-100" onClick={store.ID !== null ? actions.updateContact : actions.createContact}>save</button>
+						<Link to="/" onClick={data.state !== null ? actions.updateContact : actions.createContact}>
+							<button className="btn btn-primary w-100">save</button>
 						</Link>
 						<Link to="/" onClick={actions.resetAllData}>
 							or get back to contacts

@@ -22,8 +22,8 @@ const CardContact = () => {
                         </div>
                         <div className="col-12 col-md-2 p-0">
                             <div className="d-flex justify-content-around col-4 col-md-12 p-0">
-                                <Link to="/add-contact">
-                                    <button className="border-0 py-2" onClick={actions.setAllContactData}><i id={contact.id} className="fa-solid fa-pencil"></i></button>
+                                <Link to="/add-contact" state={{id: contact.id}}>
+                                    <button className="border-0 py-2"><i className="fa-solid fa-pencil"></i></button>
                                 </Link>
                                 <Modal ID={contact.id}/>
                             </div>

@@ -2,11 +2,17 @@ import React, {useContext} from "react";
 import { Context } from "../store/appContext";
 
 const Modal = function ({ID}) {
-    const {store, actions} = useContext(Context)
+    const {store, actions} = useContext(Context);
+
+    const loadName = (id) => {
+        actions.setID(id)
+        actions.setContactName(store.userContacts[store.userContacts.findIndex((item)=>item.id == id)].name)
+    }
+    
     return (
         <>
              {/* <!-- Button trigger modal --> */}
-            <button type="button" className="border-0 py-2" data-bs-toggle="modal" onClick={actions.setAllContactData} data-bs-target="#staticBackdrop">
+            <button type="button" className="border-0 py-2" data-bs-toggle="modal" onClick={()=>loadName(ID)} data-bs-target="#staticBackdrop">
                 <i id={ID} className="fa-solid fa-trash-can"></i>
             </button>
 
@@ -19,7 +25,7 @@ const Modal = function ({ID}) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={actions.resetAllData}></button>
                         </div>
                         <div className="modal-body">
-                            Are you sure you want to delete {store.contactName} as contact?
+                            Are you sure you want to delete {store.contactName} contact?
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={actions.resetAllData}>Cancel</button>

@@ -9,16 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			ID: null
 		},
 		actions: {
-			setAllContactData: (e) => {
-				setStore({ID: e.target.id});
-				let index = getStore().userContacts.findIndex((item)=>item.id == e.target.id);
-				setStore({contactName: getStore().userContacts[index].name});
-				setStore({email: getStore().userContacts[index].email});
-				setStore({phone: getStore().userContacts[index].phone});
-				setStore({address: getStore().userContacts[index].address});
-			},
-			setUserContacts: (userContacts) => {
-				setStore({userContacts: userContacts});
+			setID: (ID) => {
+				setStore({ID: ID});
 			},
 			setContactName: (name) => {
 				setStore({contactName: name});
@@ -86,7 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let data = await response.json();
 					console.log("User loaded");
 					console.log(data.contacts);
-					getActions().setUserContacts(data.contacts)
+					setStore({userContacts: data.contacts});
 					return true;
 				} catch (error) {
 					console.log(error);

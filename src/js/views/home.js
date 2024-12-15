@@ -8,7 +8,6 @@ export const Home = () => {
 	const {store, actions} = useContext(Context);
 	
 	useEffect(() => {actions.getAllContacts()},[])
-
 	return (
 		<>
 			<div className="container d-flex justify-content-end mb-3 p-0 col-11">
